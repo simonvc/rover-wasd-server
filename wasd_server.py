@@ -36,9 +36,9 @@ board.digital[Ppan].write(pan)
 #webcam=SimpleCV.Camera()
 
 
-@app.route("/hello")
+@app.route("/")
 def hello():
-  return "Hello world"
+  return "You probably want <a href=/static/rover.html> to control the rover. </a>"
 
 #@app.route("/cam.jpg")
 #def cam():
