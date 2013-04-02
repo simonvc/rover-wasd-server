@@ -160,6 +160,17 @@ def K():
   board.digital[Ppan].write(pan)
   return('%s, %s' % (pan, tilt))
 
+#  resest the camera
+@app.route('/resetcamera')
+def resetcamera():
+  global pan
+  global tilt
+  pan=1238
+  tilt=1238
+  board.digital[Ppan].write(pan)
+  board.digital[Ptilt].write(tilt)
+  return('%s, %s' % (pan, tilt))
+
 
 ############### motor controllers ###################
 ########################   w    ##########
@@ -239,23 +250,55 @@ def dup():
 @app.route("/wa")
 def wa():
   print("wa")
+  board.digital[LeftBack].write(0)
+  board.digital[RightBack].write(0)
+  board.digital[LeftForward].write(0)
+  board.digital[RightForward].write(1)
   return("wwaaa")
 
 @app.route("/waup")
 def waup():
   print("waup")
+  board.digital[LeftBack].write(0)
+  board.digital[RightBack].write(0)
+  board.digital[LeftForward].write(0)
+  board.digital[RightForward].write(0)
   return("wwaaa")
 
 ##################### w d ##################
 @app.route("/wd")
 def wd():
   print("wd")
+  board.digital[LeftBack].write(0)
+  board.digital[RightBack].write(0)
+  board.digital[LeftForward].write(1)
+  board.digital[RightForward].write(0)
   return("wd")
 
 @app.route("/wdup")
 def wdup():
   print("wdup")
+  board.digital[LeftBack].write(0)
+  board.digital[RightBack].write(0)
+  board.digital[LeftForward].write(0)
+  board.digital[RightForward].write(0)
   return("wdup")
+
+@app.route("/allstop")
+def allstop():
+  print("allstop")
+  board.digital[LeftBack].write(0)
+  board.digital[RightBack].write(0)
+  board.digital[LeftForward].write(0)
+  board.digital[RightForward].write(0)
+  return("allstop")
 
 if __name__ == '__main__':
   app.run(debug=True, host='0.0.0.0')
+
+
+
+
+
+
+
