@@ -5,10 +5,12 @@ from pyfirmata import SERVO
 from time import sleep
 from os import popen
 
+from threading import Timer
+from time import time
+
 from flask import Flask, Response
 app = Flask(__name__)
 
-#import SimpleCV
 
 board = Arduino('/dev/ttyUSB0')
 
@@ -33,20 +35,20 @@ board.digital[Ptilt].mode = SERVO
 board.digital[Ptilt].write(tilt)
 board.digital[Ppan].write(pan)
 
-#webcam=SimpleCV.Camera()
 
 
 @app.route("/")
 def hello():
   return "You probably want <a href=/static/rover.html> to control the rover. </a>"
 
-#@app.route("/cam.jpg")
-#def cam():
-#  f=webcam.getImage().save('static/last.jpg')
-#  return Response(open('static/last.jpg').read(), mimetype='image/jpeg')
 ########################## end setup ################
 
 
+def safestop():
+  board.digital[LeftBack].write(0)
+  board.digital[RightBack].write(0)
+  board.digital[LeftForward].write(0)
+  board.digital[RightForward].write(0)
 
 ####################### pan tilt ####################
 
@@ -181,6 +183,7 @@ def w():
   board.digital[RightBack].write(0)
   board.digital[LeftForward].write(1)
   board.digital[RightForward].write(1)
+  Timer(1, safestop).start()
   return("w")
 
 @app.route("/wup")
@@ -199,6 +202,7 @@ def a():
   board.digital[RightBack].write(0)
   board.digital[LeftForward].write(0)
   board.digital[RightForward].write(1)
+  Timer(1, safestop).start()
   return("a")
 
 @app.route("/aup")
@@ -217,6 +221,7 @@ def s():
   board.digital[RightBack].write(1)
   board.digital[LeftForward].write(0)
   board.digital[RightForward].write(0)
+  Timer(1, safestop).start()
   return("s")
 
 @app.route("/sup")
@@ -235,6 +240,7 @@ def d():
   board.digital[RightBack].write(1)
   board.digital[LeftForward].write(1)
   board.digital[RightForward].write(0)
+  Timer(1, safestop).start()
   return("d")
 
 @app.route("/dup")
@@ -254,6 +260,7 @@ def wa():
   board.digital[RightBack].write(0)
   board.digital[LeftForward].write(0)
   board.digital[RightForward].write(1)
+  Timer(1, safestop).start()
   return("wwaaa")
 
 @app.route("/waup")
@@ -273,6 +280,7 @@ def wd():
   board.digital[RightBack].write(0)
   board.digital[LeftForward].write(1)
   board.digital[RightForward].write(0)
+  Timer(1, safestop).start()
   return("wd")
 
 @app.route("/wdup")
@@ -284,6 +292,7 @@ def wdup():
   board.digital[RightForward].write(0)
   return("wdup")
 
+
 @app.route("/allstop")
 def allstop():
   print("allstop")
@@ -292,6 +301,7 @@ def allstop():
   board.digital[LeftForward].write(0)
   board.digital[RightForward].write(0)
   return("allstop")
+
 
 if __name__ == '__main__':
   app.run(debug=True, host='0.0.0.0')
