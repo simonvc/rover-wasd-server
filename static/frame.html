@@ -1,7 +1,11 @@
 <html>
 <body>
 
-<img  src="http://192.168.1.199:8090/?action=stream" >
 
+<img  id='webcam' src="" >
+
+  <script language='javascript'>
+    document.getElementById("webcam").src=location.origin.replace('5000', '8090/?action=stream');
+  </script>
 </body>
 </html>
