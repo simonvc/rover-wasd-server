@@ -23,6 +23,18 @@ $.ajaxSetup({'cache' : false});
 my_scope = this;
 my_combos = [
     {
+        "keys"          : "shift t",
+        "is_exclusive"  : false,
+        "on_keydown"    : function() {
+            console.log("testing");
+            $.ajax("/w");
+        },
+        "on_keyup"      : function(e) {
+            console.log("testing dont stop");
+        },
+        "this"          : my_scope
+    },
+    {
         "keys"          : "w a",
         "is_exclusive"  : false,
         "on_keydown"    : function() {
