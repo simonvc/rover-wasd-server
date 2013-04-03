@@ -24,6 +24,30 @@ $.ajaxSetup({'cache' : false});
 my_scope = this;
 my_combos = [
     {
+        "keys"          : "i",
+        "is_exclusive"  : false,
+        "on_keydown"    : function() {
+            console.log("light on");
+            $.ajax("/light_on");
+        },
+        "on_keyup"      : function(e) {
+            console.log("dont bother turning the light off");
+        },
+        "this"          : my_scope
+    },
+    {
+        "keys"          : "u",
+        "is_exclusive"  : true,
+        "on_keydown"    : function() {
+            console.log("light off");
+            $.ajax("/light_off");
+        },
+        "on_keyup"      : function(e) {
+            console.log("dont bother turning the light off");
+        },
+        "this"          : my_scope
+    },
+    {
         "keys"          : "shift t",
         "is_exclusive"  : false,
         "on_keydown"    : function() {

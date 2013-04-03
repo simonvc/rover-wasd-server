@@ -4,6 +4,7 @@ from pyfirmata import Arduino
 from pyfirmata import SERVO
 from time import sleep
 from os import popen
+import piface.pfio as pfio
 
 from threading import Timer
 from time import time
@@ -13,7 +14,7 @@ app = Flask(__name__)
 
 
 board = Arduino('/dev/ttyUSB0')
-
+pfio.init()
 
 sleep(2)
 Ptilt = 2
@@ -35,7 +36,7 @@ board.digital[Ptilt].mode = SERVO
 board.digital[Ptilt].write(tilt)
 board.digital[Ppan].write(pan)
 
-
+pfio.digital_write(0,1)
 
 @app.route("/")
 def hello():
@@ -43,6 +44,15 @@ def hello():
 
 ########################## end setup ################
 
+@app.route("/light_on")
+def light_on():
+  pfio.digital_write(0,1)
+  return "light on"
+
+@app.route("/light_off")
+def light_off():
+  pfio.digital_write(0,0)
+  return "light off"
 
 def safestop():
   board.digital[LeftBack].write(0)
