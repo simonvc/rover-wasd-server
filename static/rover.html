@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<iframe src="http://192.168.1.199:8090/?action=stream" >
+<iframe width=360 height=260 src="/static/frame.html" >
 </iframe>
 <br/>
 
@@ -19,6 +19,7 @@ To control the head (fast) OKL:
 
 
 <script language='JavaScript'>
+$.ajaxSetup({'cache' : false});
 my_scope = this;
 my_combos = [
     {
@@ -136,7 +137,7 @@ my_combos = [
         "this"          : my_scope
     },
     {
-        "keys"          : "shift O",
+        "keys"          : "shift o",
         "is_exclusive"  : true,
         "on_keydown"    : function() {
             console.log("O");
@@ -145,8 +146,8 @@ my_combos = [
         "this"          : my_scope
     },
     {
-        "keys"          : "shift K",
-        "is_exclusive"  : true,
+        "keys"          : "shift k",
+        "is_exclusive"  : false,
         "on_keydown"    : function() {
             console.log("K");
             $.ajax("/K");
@@ -154,8 +155,8 @@ my_combos = [
         "this"          : my_scope
     },
     {
-        "keys"          : "shift L",
-        "is_exclusive"  : true,
+        "keys"          : "shift l",
+        "is_exclusive"  : false,
         "on_keydown"    : function() {
             console.log("L");
             $.ajax("/L");
@@ -164,10 +165,19 @@ my_combos = [
     },
     {
         "keys"          : ":",
-        "is_exclusive"  : true,
+        "is_exclusive"  : false,
         "on_keydown"    : function() {
             console.log(":");
             $.ajax("/colon");
+        },
+        "this"          : my_scope
+    },
+    {
+        "keys"          : "b",
+        "is_exclusive"  : false,
+        "on_keydown"    : function() {
+            console.log("b");
+            $.ajax("/resetcamera");
         },
         "this"          : my_scope
     },
